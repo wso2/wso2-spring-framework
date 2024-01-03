@@ -53,7 +53,6 @@ import org.springframework.remoting.support.RemoteInvocationResult;
  * @since 2.5.1
  * @see org.springframework.remoting.httpinvoker.HttpInvokerClientInterceptor
  * @see org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean
- * @deprecated as of Spring Framework 5.1, in favor of {@link HttpInvokerServiceExporter}
  */
 @Deprecated
 @org.springframework.lang.UsesSunHttpServer
