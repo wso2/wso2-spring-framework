@@ -50,8 +50,7 @@ import javax.servlet.http.HttpServletResponse;
  * DispatcherServlet, indicating that there will never be a view to render.
  *
  * <p>As of Spring 2.0, Spring's HTTP-based remote exporters, such as
- * {@link org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter}
- * and {@link org.springframework.remoting.caucho.HessianServiceExporter},
+ * {@link org.springframework.remoting.caucho.HessianServiceExporter},
  * implement this interface rather than the more extensive Controller interface,
  * for minimal dependencies on Spring-specific web infrastructure.
  *
@@ -71,7 +70,6 @@ import javax.servlet.http.HttpServletResponse;
  * @see org.springframework.web.servlet.mvc.Controller
  * @see org.springframework.web.servlet.mvc.LastModified
  * @see org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter
- * @see org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter
  * @see org.springframework.remoting.caucho.HessianServiceExporter
  */
 @FunctionalInterface
