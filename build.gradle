@@ -441,5 +441,12 @@ configure(rootProject) {
 			}
 		}
 	}
+}
 
+tasks.named('build').configure {
+	finalizedBy('publishToMavenLocal')
+}
+
+tasks.named('publish').configure {
+	dependsOn('build')
 }

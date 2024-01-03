@@ -374,10 +374,6 @@ The following remoting technologies are now deprecated and will not be replaced:
   `RmiServiceExporter`, Spring supports both traditional RMI (with `java.rmi.Remote`
   interfaces and `java.rmi.RemoteException`) and transparent remoting through RMI
   invokers (with any Java interface).
-* <<remoting-httpinvoker>>: Spring provides a special remoting strategy that allows
-  for Java serialization though HTTP, supporting any Java interface (as the RMI
-  invoker does). The corresponding support classes are `HttpInvokerProxyFactoryBean`
-  and `HttpInvokerServiceExporter`.
 * <<remoting-caucho-protocols-hessian>>: By using Spring's `HessianProxyFactoryBean` and the
   `HessianServiceExporter`, you can transparently expose your services through the
   lightweight binary HTTP-based protocol provided by Caucho.
@@ -962,123 +958,6 @@ this application context.
 NOTE: The preceding example does not show a flexible kind of security infrastructure. For
 more options as far as security is concerned, have a look at the Spring Security project
 at https://spring.io/projects/spring-security/.
-
-
-
-[[remoting-httpinvoker]]
-=== Spring HTTP Invoker (Deprecated)
-
-WARNING: As of Spring Framework 5.3, HTTP Invoker support is deprecated and will not be replaced.
-
-As opposed to Hessian, Spring HTTP invokers are both lightweight protocols that use their own slim
-serialization mechanisms and use the standard Java serialization
-mechanism to expose services through HTTP. This has a huge advantage if your arguments
-and return types are complex types that cannot be serialized by using the serialization
-mechanisms Hessian uses (see the next section for more considerations when
-you choose a remoting technology).
-
-Under the hood, Spring uses either the standard facilities provided by the JDK or
-Apache `HttpComponents` to perform HTTP calls. If you need more
-advanced and easier-to-use functionality, use the latter. See
-https://hc.apache.org/httpcomponents-client-ga/[hc.apache.org/httpcomponents-client-ga/]
-for more information.
-
-[CAUTION]
-====
-Be aware of vulnerabilities due to unsafe Java deserialization:
-Manipulated input streams can lead to unwanted code execution on the server
-during the deserialization step. As a consequence, do not expose HTTP invoker
-endpoints to untrusted clients. Rather, expose them only between your own services.
-In general, we strongly recommend using any other message format (such as JSON) instead.
-
-If you are concerned about security vulnerabilities due to Java serialization,
-consider the general-purpose serialization filter mechanism at the core JVM level,
-originally developed for JDK 9 but backported to JDK 8, 7 and 6 in the meantime. See
-https://blogs.oracle.com/java-platform-group/entry/incoming_filter_serialization_data_a
-and https://openjdk.java.net/jeps/290.
-====
-
-
-[[remoting-httpinvoker-server]]
-==== Exposing the Service Object
-
-Setting up the HTTP invoker infrastructure for a service object closely resembles the
-way you would do the same by using Hessian. As Hessian support provides
-`HessianServiceExporter`, Spring's HttpInvoker support provides
-`org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter`.
-
-To expose the `AccountService` (mentioned earlier) within a Spring Web MVC
-`DispatcherServlet`, the following configuration needs to be in place in the
-dispatcher's application context, as the following example shows:
-
-[source,xml,indent=0,subs="verbatim,quotes"]
-----
-	<bean name="/AccountService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="accountService"/>
-		<property name="serviceInterface" value="example.AccountService"/>
-	</bean>
-----
-
-Such an exporter definition is exposed through the `DispatcherServlet` instance's standard
-mapping facilities, as explained in <<remoting-caucho-protocols, the section on Hessian>>.
-
-Alternatively, you can create an `HttpInvokerServiceExporter` in your root application context
-(for example, in `'WEB-INF/applicationContext.xml'`), as the following example shows:
-
-[source,xml,indent=0,subs="verbatim,quotes"]
-----
-	<bean name="accountExporter" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="accountService"/>
-		<property name="serviceInterface" value="example.AccountService"/>
-	</bean>
-----
-
-In addition, you can define a corresponding servlet for this exporter in `web.xml`, with the
-servlet name matching the bean name of the target exporter, as the following example shows:
-
-[source,xml,indent=0,subs="verbatim,quotes"]
-----
-	<servlet>
-		<servlet-name>accountExporter</servlet-name>
-		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>accountExporter</servlet-name>
-		<url-pattern>/remoting/AccountService</url-pattern>
-	</servlet-mapping>
-----
-
-
-[[remoting-httpinvoker-client]]
-==== Linking in the Service at the Client
-
-Again, linking in the service from the client much resembles the way you would do it
-when you use Hessian. By using a proxy, Spring can translate your calls to
-HTTP POST requests to the URL that points to the exported service. The following example
-shows how to configure this arrangement:
-
-[source,xml,indent=0,subs="verbatim,quotes"]
-----
-	<bean id="httpInvokerProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-		<property name="serviceUrl" value="https://remotehost:8080/remoting/AccountService"/>
-		<property name="serviceInterface" value="example.AccountService"/>
-	</bean>
-----
-
-As mentioned earlier, you can choose what HTTP client you want to use. By default, the
-`HttpInvokerProxy` uses the JDK's HTTP functionality, but you can also use the Apache
-`HttpComponents` client by setting the `httpInvokerRequestExecutor` property.
-The following example shows how to do so:
-
-[source,xml,indent=0,subs="verbatim,quotes"]
-----
-	<property name="httpInvokerRequestExecutor">
-		<bean class="org.springframework.remoting.httpinvoker.HttpComponentsHttpInvokerRequestExecutor"/>
-	</property>
-----
-
-
 
 [[remoting-jms]]
 === JMS (Deprecated)
