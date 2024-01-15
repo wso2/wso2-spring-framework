@@ -438,6 +438,9 @@ configure(rootProject) {
 				artifact distZip
 			}
 		}
-	}
+	}	
+}
 
+tasks.named('build').configure {
+	finalizedBy('publishToMavenLocal')
 }

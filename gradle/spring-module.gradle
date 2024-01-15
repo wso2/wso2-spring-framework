@@ -100,3 +100,7 @@ publishing {
 // Disable publication of test fixture artifacts.
 components.java.withVariantsFromConfiguration(configurations.testFixturesApiElements) { skip() }
 components.java.withVariantsFromConfiguration(configurations.testFixturesRuntimeElements) { skip() }
+
+tasks.named('build').configure {
+	finalizedBy('publishToMavenLocal')
+}
