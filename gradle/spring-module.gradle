@@ -95,6 +95,19 @@ publishing {
 			artifact javadocJar
 		}
 	}
+
+	repositories {
+		maven {
+			name 'nexus'
+			url = System.getenv("NEXUS_REPO_URL") ? System.getenv("NEXUS_REPO_URL") :
+					"https://maven.wso2.org/nexus/service/local/staging/deploy/maven2/"
+			credentials {
+				username rootProject.hasProperty("nexus_username") ? nexus_username : System.getenv("NEXUS_USERNAME")
+				password rootProject.hasProperty("nexus_password") ? nexus_password : System.getenv("NEXUS_PASSWORD")
+			}
+			allowInsecureProtocol = false
+		}
+	}
 }
 
 // Disable publication of test fixture artifacts.
@@ -103,4 +116,8 @@ components.java.withVariantsFromConfiguration(configurations.testFixturesRuntime
 
 tasks.named('build').configure {
 	finalizedBy('publishToMavenLocal')
+}
+
+tasks.named('publish').configure {
+	dependsOn('build')
 }
