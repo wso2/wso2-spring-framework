@@ -121,7 +121,6 @@ public class SimpleHttpServerFactoryBean implements FactoryBean<HttpServer>, Ini
 	 * for specific context paths.
 	 * @param contexts a Map with context paths as keys and HttpHandler
 	 * objects as values
-	 * @see org.springframework.remoting.httpinvoker.SimpleHttpInvokerServiceExporter
 	 * @see org.springframework.remoting.caucho.SimpleHessianServiceExporter
 	 */
 	public void setContexts(Map<String, HttpHandler> contexts) {
