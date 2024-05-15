@@ -48,7 +48,6 @@ import org.springframework.lang.Nullable;
  * @author Juergen Hoeller
  * @since 1.1.3
  * @see java.rmi.server.RMIClassLoader
- * @see RemoteInvocationSerializingExporter#createObjectInputStream
  * @see org.springframework.remoting.httpinvoker.HttpInvokerClientInterceptor#setCodebaseUrl
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
  */
