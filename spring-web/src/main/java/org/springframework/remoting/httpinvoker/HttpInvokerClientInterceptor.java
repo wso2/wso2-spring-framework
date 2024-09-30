@@ -66,7 +66,6 @@ import org.springframework.remoting.support.RemoteInvocationResult;
  * @see #setCodebaseUrl
  * @see #setRemoteInvocationFactory
  * @see #setHttpInvokerRequestExecutor
- * @see HttpInvokerServiceExporter
  * @see HttpInvokerProxyFactoryBean
  * @see java.rmi.server.RMIClassLoader
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
