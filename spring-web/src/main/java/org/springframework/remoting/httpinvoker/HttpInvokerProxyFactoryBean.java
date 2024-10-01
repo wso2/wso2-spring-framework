@@ -50,7 +50,6 @@ import org.springframework.util.Assert;
  * @see #setServiceUrl
  * @see #setCodebaseUrl
  * @see HttpInvokerClientInterceptor
- * @see HttpInvokerServiceExporter
  * @see org.springframework.remoting.rmi.RmiProxyFactoryBean
  * @see org.springframework.remoting.caucho.HessianProxyFactoryBean
  * @deprecated as of 5.3 (phasing out serialization-based remoting)
