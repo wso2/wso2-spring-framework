@@ -18,6 +18,7 @@ package org.springframework.web.util;
 
 import java.net.URLDecoder;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -635,7 +636,7 @@ public class UrlPathHelper {
 
 	private String removeJsessionid(String requestUri) {
 		String key = ";jsessionid=";
-		int index = requestUri.toLowerCase().indexOf(key);
+		int index = requestUri.toLowerCase(Locale.ROOT).indexOf(key);
 		if (index == -1) {
 			return requestUri;
 		}

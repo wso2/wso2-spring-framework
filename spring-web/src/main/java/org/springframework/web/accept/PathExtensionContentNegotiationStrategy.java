@@ -99,7 +99,7 @@ public class PathExtensionContentNegotiationStrategy extends AbstractMappingCont
 		// Ignore LOOKUP_PATH attribute, use our own "fixed" UrlPathHelper with decoding off
 		String path = this.urlPathHelper.getLookupPathForRequest(request);
 		String extension = UriUtils.extractFileExtension(path);
-		return (StringUtils.hasText(extension) ? extension.toLowerCase(Locale.ENGLISH) : null);
+		return (StringUtils.hasText(extension) ? extension.toLowerCase(Locale.ROOT) : null);
 	}
 
 	/**

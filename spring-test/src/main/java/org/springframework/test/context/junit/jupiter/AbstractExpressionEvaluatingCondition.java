@@ -18,6 +18,7 @@ package org.springframework.test.context.junit.jupiter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -193,7 +194,7 @@ abstract class AbstractExpressionEvaluatingCondition implements ExecutionConditi
 			return (Boolean) result;
 		}
 		else if (result instanceof String) {
-			String str = ((String) result).trim().toLowerCase();
+			String str = ((String) result).trim().toLowerCase(Locale.ROOT);
 			if ("true".equals(str)) {
 				return true;
 			}

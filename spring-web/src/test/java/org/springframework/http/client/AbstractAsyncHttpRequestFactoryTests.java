@@ -187,7 +187,7 @@ public abstract class AbstractAsyncHttpRequestFactoryTests extends AbstractMockW
 		Future<ClientHttpResponse> futureResponse = request.executeAsync();
 		try (ClientHttpResponse response = futureResponse.get()) {
 			assertThat(response.getStatusCode()).as("Invalid response status").isEqualTo(HttpStatus.OK);
-			assertThat(request.getMethod().name()).as("Invalid method").isEqualTo(path.toUpperCase(Locale.ENGLISH));
+			assertThat(request.getMethod().name()).as("Invalid method").isEqualTo(path.toUpperCase(Locale.ROOT));
 		}
 	}
 

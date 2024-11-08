@@ -16,6 +16,8 @@
 
 package org.springframework.web.reactive.result.condition;
 
+import java.util.Locale;
+
 import org.springframework.lang.Nullable;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -106,7 +108,7 @@ abstract class AbstractNameValueExpression<T> implements NameValueExpression<T> 
 
 	@Override
 	public int hashCode() {
-		int result = (isCaseSensitiveName() ? this.name : this.name.toLowerCase()).hashCode();
+		int result = (isCaseSensitiveName() ? this.name : this.name.toLowerCase(Locale.ROOT)).hashCode();
 		result = 31 * result + ObjectUtils.nullSafeHashCode(this.value);
 		result = 31 * result + (this.isNegated ? 1 : 0);
 		return result;

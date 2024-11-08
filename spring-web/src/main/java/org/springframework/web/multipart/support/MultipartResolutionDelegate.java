@@ -19,6 +19,7 @@ package org.springframework.web.multipart.support;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -71,7 +72,7 @@ public final class MultipartResolutionDelegate {
 
 	private static boolean isMultipartContent(HttpServletRequest request) {
 		String contentType = request.getContentType();
-		return (contentType != null && contentType.toLowerCase().startsWith("multipart/"));
+		return (contentType != null && contentType.toLowerCase(Locale.ROOT).startsWith("multipart/"));
 	}
 
 	static MultipartHttpServletRequest asMultipartHttpServletRequest(HttpServletRequest request) {

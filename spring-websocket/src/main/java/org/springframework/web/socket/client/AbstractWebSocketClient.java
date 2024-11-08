@@ -20,6 +20,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -85,7 +86,7 @@ public abstract class AbstractWebSocketClient implements WebSocketClient {
 		HttpHeaders headersToUse = new HttpHeaders();
 		if (headers != null) {
 			headers.forEach((header, values) -> {
-				if (values != null && !specialHeaders.contains(header.toLowerCase())) {
+				if (values != null && !specialHeaders.contains(header.toLowerCase(Locale.ROOT))) {
 					headersToUse.put(header, values);
 				}
 			});

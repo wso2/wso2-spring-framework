@@ -227,7 +227,7 @@ public class SimpleHttpInvokerRequestExecutor extends AbstractHttpInvokerRequest
 	 */
 	protected boolean isGzipResponse(HttpURLConnection con) {
 		String encodingHeader = con.getHeaderField(HTTP_HEADER_CONTENT_ENCODING);
-		return (encodingHeader != null && encodingHeader.toLowerCase().contains(ENCODING_GZIP));
+		return (encodingHeader != null && encodingHeader.toLowerCase(Locale.ROOT).contains(ENCODING_GZIP));
 	}
 
 }
