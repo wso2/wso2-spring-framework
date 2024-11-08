@@ -84,7 +84,7 @@ public class HiddenHttpMethodFilter extends OncePerRequestFilter {
 		if ("POST".equals(request.getMethod()) && request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE) == null) {
 			String paramValue = request.getParameter(this.methodParam);
 			if (StringUtils.hasLength(paramValue)) {
-				String method = paramValue.toUpperCase(Locale.ENGLISH);
+				String method = paramValue.toUpperCase(Locale.ROOT);
 				if (ALLOWED_METHODS.contains(method)) {
 					requestToUse = new HttpMethodRequestWrapper(request, method);
 				}

@@ -364,7 +364,7 @@ public class HttpComponentsHttpInvokerRequestExecutor extends AbstractHttpInvoke
 	protected boolean isGzipResponse(HttpResponse httpResponse) {
 		Header encodingHeader = httpResponse.getFirstHeader(HTTP_HEADER_CONTENT_ENCODING);
 		return (encodingHeader != null && encodingHeader.getValue() != null &&
-				encodingHeader.getValue().toLowerCase().contains(ENCODING_GZIP));
+				encodingHeader.getValue().toLowerCase(Locale.ROOT).contains(ENCODING_GZIP));
 	}
 
 }

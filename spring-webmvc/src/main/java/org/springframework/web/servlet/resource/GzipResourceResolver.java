@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,7 +71,7 @@ public class GzipResourceResolver extends AbstractResourceResolver {
 
 	private boolean isGzipAccepted(HttpServletRequest request) {
 		String value = request.getHeader("Accept-Encoding");
-		return (value != null && value.toLowerCase().contains("gzip"));
+		return (value != null && value.toLowerCase(Locale.ROOT).contains("gzip"));
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class StandardToWebSocketExtensionAdapter extends WebSocketExtension {
 
 	private static Map<String, String> initParameters(Extension extension) {
 		List<Extension.Parameter> parameters = extension.getParameters();
-		Map<String, String> result = new LinkedCaseInsensitiveMap<>(parameters.size(), Locale.ENGLISH);
+		Map<String, String> result = new LinkedCaseInsensitiveMap<>(parameters.size(), Locale.ROOT);
 		for (Extension.Parameter parameter : parameters) {
 			result.put(parameter.getName(), parameter.getValue());
 		}

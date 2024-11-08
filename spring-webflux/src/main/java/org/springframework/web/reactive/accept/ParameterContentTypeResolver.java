@@ -51,7 +51,7 @@ public class ParameterContentTypeResolver implements RequestedContentTypeResolve
 	}
 
 	private static String formatKey(String key) {
-		return key.toLowerCase(Locale.ENGLISH);
+		return key.toLowerCase(Locale.ROOT);
 	}
 
 

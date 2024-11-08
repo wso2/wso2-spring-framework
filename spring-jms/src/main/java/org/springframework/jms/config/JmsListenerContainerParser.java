@@ -16,6 +16,8 @@
 
 package org.springframework.jms.config;
 
+import java.util.Locale;
+
 import javax.jms.Session;
 
 import org.w3c.dom.Element;
@@ -154,7 +156,7 @@ class JmsListenerContainerParser extends AbstractListenerContainerParser {
 				}
 			}
 			else {
-				properties.add("cacheLevelName", "CACHE_" + cache.toUpperCase());
+				properties.add("cacheLevelName", "CACHE_" + cache.toUpperCase(Locale.ROOT));
 			}
 		}
 
