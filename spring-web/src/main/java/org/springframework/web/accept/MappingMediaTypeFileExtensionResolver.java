@@ -109,7 +109,7 @@ public class MappingMediaTypeFileExtensionResolver implements MediaTypeFileExten
 	 */
 	@Nullable
 	protected MediaType lookupMediaType(String extension) {
-		return this.mediaTypes.get(extension.toLowerCase(Locale.ROOT);
+		return this.mediaTypes.get(extension.toLowerCase(Locale.ROOT));
 	}
 
 }

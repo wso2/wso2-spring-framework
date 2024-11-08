@@ -786,7 +786,7 @@ public class ResourceHttpRequestHandler extends WebContentGenerator
 			String filename = resource.getFilename();
 			String ext = StringUtils.getFilenameExtension(filename);
 			if (ext != null) {
-				mediaType = this.mediaTypes.get(ext.toLowerCase(Locale.ROOT);
+				mediaType = this.mediaTypes.get(ext.toLowerCase(Locale.ROOT));
 			}
 			if (mediaType == null) {
 				List<MediaType> mediaTypes = MediaTypeFactory.getMediaTypes(filename);
