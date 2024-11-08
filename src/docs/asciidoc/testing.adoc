@@ -2002,7 +2002,7 @@ test methods within that class are automatically disabled as well.
 Expressions can be any of the following:
 
 * <<core.adoc#expressions, Spring Expression Language>> (SpEL) expression. For example:
-  `@DisabledIf("#{systemProperties['os.name'].toLowerCase(Locale.ROOT).contains('mac')}")`
+  `@DisabledIf("#{systemProperties['os.name'].toLowerCase().contains('mac')}")`
 * Placeholder for a property available in the Spring <<core.adoc#beans-environment, `Environment`>>.
   For example: `@DisabledIf("${smoke.tests.disabled}")`
 * Text literal. For example: `@DisabledIf("true")`

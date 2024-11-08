@@ -605,7 +605,7 @@ public class ResourceWebHandler implements WebHandler, InitializingBean {
 		if (!CollectionUtils.isEmpty(this.mediaTypes)) {
 			String ext = StringUtils.getFilenameExtension(filename);
 			if (ext != null) {
-				mediaType = this.mediaTypes.get(ext.toLowerCase(Locale.ROOT);
+				mediaType = this.mediaTypes.get(ext.toLowerCase(Locale.ROOT));
 			}
 		}
 		if (mediaType == null) {
