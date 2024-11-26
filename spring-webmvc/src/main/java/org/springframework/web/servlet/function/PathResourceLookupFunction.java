@@ -127,6 +127,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 		}
 		return sb != null ? sb.toString() : path;
 	}
+
 	private String cleanLeadingSlash(String path) {
 		boolean slash = false;
 		for (int i = 0; i < path.length(); i++) {
