@@ -18,6 +18,7 @@ package org.springframework.web.reactive.function.server;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
@@ -169,7 +170,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 		if (path.contains("%")) {
 			try {
 				// Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
-				String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
+				String decodedPath = URLDecoder.decode(path, "UTF-8");
 				if (isInvalidPath(decodedPath)) {
 					return true;
 				}
@@ -178,7 +179,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 					return true;
 				}
 			}
-			catch (IllegalArgumentException ex) {
+			catch (IllegalArgumentException | UnsupportedEncodingException ex) {
 				// May not be possible to decode...
 			}
 		}
@@ -217,12 +218,12 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 		if (resourcePath.contains("%")) {
 			// Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars...
 			try {
-				String decodedPath = URLDecoder.decode(resourcePath, StandardCharsets.UTF_8);
+				String decodedPath = URLDecoder.decode(resourcePath, "UTF-8");
 				if (decodedPath.contains("../") || decodedPath.contains("..\\")) {
 					return true;
 				}
 			}
-			catch (IllegalArgumentException ex) {
+			catch (IllegalArgumentException | UnsupportedEncodingException ex) {
 				// May not be possible to decode...
 			}
 		}
