@@ -18,8 +18,8 @@ package org.springframework.web.servlet.function;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -72,7 +72,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 			return Optional.empty();
 		}
 		if (!(this.location instanceof UrlResource)) {
-			path = UriUtils.decode(path, StandardCharsets.UTF_8);
+			path = UriUtils.decode(path, "UTF-8");
 		}
 
 		try {
@@ -161,7 +161,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 		if (path.contains("%")) {
 			try {
 				// Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars
-				String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
+				String decodedPath = URLDecoder.decode(path,  "UTF-8");
 				if (isInvalidPath(decodedPath)) {
 					return true;
 				}
@@ -170,7 +170,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 					return true;
 				}
 			}
-			catch (IllegalArgumentException ex) {
+			catch (IllegalArgumentException | UnsupportedEncodingException ex) {
 				// May not be possible to decode...
 			}
 		}
@@ -193,7 +193,8 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 			resourcePath = ((ClassPathResource) resource).getPath();
 			locationPath = StringUtils.cleanPath(((ClassPathResource) this.location).getPath());
 		}
-		else if (resource instanceof ServletContextResource servletContextResource) {
+		else if (resource instanceof ServletContextResource) {
+			ServletContextResource servletContextResource = (ServletContextResource) resource;
 			resourcePath = servletContextResource.getPath();
 			locationPath = StringUtils.cleanPath(((ServletContextResource) this.location).getPath());
 		}
@@ -213,12 +214,12 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 		if (resourcePath.contains("%")) {
 			// Use URLDecoder (vs UriUtils) to preserve potentially decoded UTF-8 chars...
 			try {
-				String decodedPath = URLDecoder.decode(resourcePath, StandardCharsets.UTF_8);
+				String decodedPath = URLDecoder.decode(resourcePath, "UTF-8");
 				if (decodedPath.contains("../") || decodedPath.contains("..\\")) {
 					return true;
 				}
 			}
-			catch (IllegalArgumentException ex) {
+			catch (IllegalArgumentException | UnsupportedEncodingException ex) {
 				// May not be possible to decode...
 			}
 		}
