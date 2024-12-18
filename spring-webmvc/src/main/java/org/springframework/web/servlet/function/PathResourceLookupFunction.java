@@ -161,7 +161,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Optional<Res
 
 	private static String decode(String path) {
 		try {
-			return URLDecoder.decode(path, StandardCharsets.UTF_8);
+			return URLDecoder.decode(path, "UTF-8");
 		}
 		catch (Exception ex) {
 			return "";
