@@ -485,7 +485,8 @@ public class ResourceWebHandler implements WebHandler, InitializingBean {
 	protected String processPath(String path) {
 		path = StringUtils.replace(path, "\\", "/");
 		path = cleanDuplicateSlashes(path);
-		return cleanLeadingSlash(path);
+		path = cleanLeadingSlash(path);
+		return normalizePath(path);
 	}
 
 	private String cleanDuplicateSlashes(String path) {
@@ -525,6 +526,21 @@ public class ResourceWebHandler implements WebHandler, InitializingBean {
 			}
 		}
 		return (slash ? "/" : "");
+	}
+
+	private static String normalizePath(String path) {
+		if (path.contains("%")) {
+			try {
+				path = URLDecoder.decode(path, StandardCharsets.UTF_8);
+			}
+			catch (Exception ex) {
+				return "";
+			}
+			if (path.contains("../")) {
+				path = StringUtils.cleanPath(path);
+			}
+		}
+		return path;
 	}
 
 	/**
@@ -588,7 +604,7 @@ public class ResourceWebHandler implements WebHandler, InitializingBean {
 				return true;
 			}
 		}
-		if (path.contains("..") && StringUtils.cleanPath(path).contains("../")) {
+		if (path.contains("../")) {
 			if (logger.isWarnEnabled()) {
 				logger.warn(LogFormatUtils.formatValue(
 						"Path contains \"../\" after call to StringUtils#cleanPath: [" + path + "]", -1, true));
