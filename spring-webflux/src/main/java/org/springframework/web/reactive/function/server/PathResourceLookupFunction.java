@@ -104,7 +104,8 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 	protected String processPath(String path) {
 		path = StringUtils.replace(path, "\\", "/");
 		path = cleanDuplicateSlashes(path);
-		return cleanLeadingSlash(path);
+		path = cleanLeadingSlash(path);
+		return normalizePath(path);
 	}
 	private String cleanDuplicateSlashes(String path) {
 		StringBuilder sb = null;
@@ -145,6 +146,29 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 		return (slash ? "/" : "");
 	}
 
+	private static String normalizePath(String path) {
+		String result = path;
+		if (result.contains("%")) {
+			result = decode(result);
+			if (result.contains("%")) {
+				result = decode(result);
+			}
+			if (result.contains("../")) {
+				return StringUtils.cleanPath(result);
+			}
+		}
+		return path;
+	}
+
+	private static String decode(String path) {
+		try {
+			return URLDecoder.decode(path, "UTF-8");
+		}
+		catch (Exception ex) {
+			return "";
+		}
+	}
+
 	private boolean isInvalidPath(String path) {
 		if (path.contains("WEB-INF") || path.contains("META-INF")) {
 			return true;
@@ -155,10 +179,7 @@ class PathResourceLookupFunction implements Function<ServerRequest, Mono<Resourc
 				return true;
 			}
 		}
-		if (path.contains("..") && StringUtils.cleanPath(path).contains("../")) {
-			return true;
-		}
-		return false;
+		return path.contains("../");
 	}
 
 	/**
