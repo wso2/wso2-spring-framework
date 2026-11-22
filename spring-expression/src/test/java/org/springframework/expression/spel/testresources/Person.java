@@ -42,5 +42,8 @@ public class Person {
 	public Company getCompany() {
 		return company;
 	}
+	public void getInvalid() {
+		// no-op
+	}
 
 }

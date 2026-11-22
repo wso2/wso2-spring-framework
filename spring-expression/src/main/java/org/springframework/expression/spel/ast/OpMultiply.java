@@ -120,9 +120,12 @@ public class OpMultiply extends Operator {
 		if (leftOperand instanceof String && rightOperand instanceof Integer) {
 			String text = (String) leftOperand;
 			int count = (Integer) rightOperand;
-			int requestedSize = text.length() * count;
-			checkRepeatedTextSize(requestedSize);
-			StringBuilder result = new StringBuilder(requestedSize);
+			if (count < 0) {
+				throw new SpelEvaluationException(getStartPosition(),
+						SpelMessage.NEGATIVE_REPEATED_TEXT_COUNT, count);
+			}
+			checkRepeatedTextSize(text, count);
+			StringBuilder result = new StringBuilder(text.length() * count);
 			for (int i = 0; i < count; i++) {
 				result.append(text);
 			}
@@ -132,8 +135,9 @@ public class OpMultiply extends Operator {
 		return state.operate(Operation.MULTIPLY, leftOperand, rightOperand);
 	}
 
-	private void checkRepeatedTextSize(int requestedSize) {
-		if (requestedSize > MAX_REPEATED_TEXT_SIZE) {
+	private void checkRepeatedTextSize(String text, int count) {
+		long requestedSize = (long) text.length() * (long) count;
+		if (requestedSize < 0 || requestedSize > MAX_REPEATED_TEXT_SIZE) {
 			throw new SpelEvaluationException(getStartPosition(),
 					SpelMessage.MAX_REPEATED_TEXT_SIZE_EXCEEDED, MAX_REPEATED_TEXT_SIZE);
 		}
